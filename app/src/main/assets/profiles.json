@@ -81,6 +81,14 @@
       "kmi": "android14-6.1"
     },
     {
+      "profileId": "raven-CP1A.260405.005",
+      "codename": "raven",
+      "kernelRelease": "6.1.145-android14-11",
+      "buildDisplay": "CP1A.260405.005",
+      "exploitAsset": "exploits/raven-CP1A.260405.005.so",
+      "kmi": "android14-6.1"
+    },
+    {
       "profileId": "bluejay-CP2A.260705.006",
       "codename": "bluejay",
       "kernelRelease": "6.1.157-android14-11",

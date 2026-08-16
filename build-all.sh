@@ -26,6 +26,20 @@ if [ -z "${ANDROID_NDK_HOME:-}" ]; then
       ANDROID_NDK_HOME="$ANDROID_HOME/ndk/$ndk_ver"
     fi
   fi
+  if [ -z "${ANDROID_NDK_HOME:-}" ] && [ -n "${ANDROID_SDK_ROOT:-}" ]; then
+    ndk_ver=$(ls -1 "$ANDROID_SDK_ROOT/ndk" 2>/dev/null | sort -V | tail -1)
+    if [ -n "$ndk_ver" ]; then
+      ANDROID_NDK_HOME="$ANDROID_SDK_ROOT/ndk/$ndk_ver"
+    fi
+  fi
+  for ndk_path in \
+    "${HOMEBREW_PREFIX:-}/share/android-ndk" \
+    /opt/homebrew/share/android-ndk \
+    /usr/local/share/android-ndk; do
+    if [ -z "${ANDROID_NDK_HOME:-}" ] && [ -x "$ndk_path/toolchains/llvm/prebuilt/darwin-x86_64/bin/aarch64-linux-android35-clang" ]; then
+      ANDROID_NDK_HOME="$ndk_path"
+    fi
+  done
   if [ -z "${ANDROID_NDK_HOME:-}" ]; then
     echo "ERROR: ANDROID_NDK_HOME not set and NDK not found in ANDROID_HOME/ndk/"
     echo "Set ANDROID_NDK_HOME=/path/to/android-ndk and retry."
@@ -53,6 +67,7 @@ TARGETS=(
   "lynx-CP2A.260705.006"      # Pixel 7a
   "cheetah-CP2A.260705.006"   # Pixel 7 Pro
   "panther-CP2A.260705.006"   # Pixel 7
+  "raven-CP1A.260405.005"     # Pixel 6 Pro (Android 16)
   "bluejay-CP2A.260705.006"   # Pixel 6a (Android 17)
   "bluejay-CP1A.260405.005"   # Pixel 6a (Android 16)
 )
